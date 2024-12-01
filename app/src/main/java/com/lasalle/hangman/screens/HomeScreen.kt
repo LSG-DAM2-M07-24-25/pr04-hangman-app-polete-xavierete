@@ -1,56 +1,99 @@
 package com.lasalle.hangman.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.lasalle.hangman.R
 import com.lasalle.hangman.Navigation.Screen
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    // Estado para controlar la visibilidad del diálogo
     val showHelpDialog = remember { mutableStateOf(false) }
-    
+
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color.White,
+                        Color.LightGray,
+                        Color.DarkGray
+                    )
+                )
+            )
+            .padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Welcome to Hangman!")
+        Box(
+            modifier = Modifier
+                .padding(bottom = 24.dp)
+                .fillMaxWidth()
+                .height(200.dp)
+                .clip(RoundedCornerShape(16.dp))
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Hangman Logo",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillWidth
+            )
+        }
 
-        // Logo
-        Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "Hangman Logo",
-            modifier = Modifier.size(100.dp)
+        Text(
+            text = "Welcome to Hangman!",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        // Botón de ayuda
-        Button(onClick = { showHelpDialog.value = true }) {
-            Text("Help")
+        Button(
+            onClick = { navController.navigate(Screen.Game.route) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Text("Play Game", fontSize = 18.sp)
         }
 
-        // Botones
-        Button(onClick = { navController.navigate(Screen.Difficulty.route) }) {
-            Text("Difficulty Screen")
+        Button(
+            onClick = { navController.navigate(Screen.Difficulty.route) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        ) {
+            Text("Set Difficulty", fontSize = 18.sp)
         }
 
-        Button(onClick = { navController.navigate(Screen.Game.route) }) {
-            Text("Start Game")
+        Button(
+            onClick = { showHelpDialog.value = true },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Help", fontSize = 18.sp)
         }
     }
 
-    // Diálogo de ayuda
     if (showHelpDialog.value) {
         AlertDialog(
             onDismissRequest = { showHelpDialog.value = false },
-            title = { Text("How to Play") },
+            title = { Text("How to Play", fontWeight = FontWeight.Bold) },
             text = {
                 Column {
                     Text("1. Select a difficulty level")
@@ -66,4 +109,11 @@ fun HomeScreen(navController: NavController) {
             }
         )
     }
+}
+
+@Preview
+@Composable
+fun HomeScreenPreview() {
+    val navController = rememberNavController()
+    HomeScreen(navController)
 }
