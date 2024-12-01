@@ -1,3 +1,10 @@
+/**
+ * SplashScreen.kt
+ * 
+ * This Composable function represents the Splash screen of the Hangman app. It displays the
+ * app's logo and introductory text before navigating to the Home screen after a short delay.
+ */
+
 package com.lasalle.hangman.screens
 
 import androidx.compose.foundation.Image
@@ -28,6 +35,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavController) {
+    // Navigate to HomeScreen after a delay of 2 seconds
     LaunchedEffect(key1 = true) {
         delay(2000L)
         navController.navigate(Screen.Home.route) {
@@ -35,6 +43,7 @@ fun SplashScreen(navController: NavController) {
         }
     }
 
+    // Splash Screen Layout
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,6 +61,7 @@ fun SplashScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // App Logo
         Box(
             modifier = Modifier
                 .padding(bottom = 24.dp)
@@ -67,6 +77,7 @@ fun SplashScreen(navController: NavController) {
             )
         }
         
+        // App Name
         Text(
             text = "HANGMAN",
             fontSize = 48.sp,
@@ -74,6 +85,7 @@ fun SplashScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
         
+        // Creators' Names
         Text(
             text = "Created by\nPol Hernández & Xavier Moreno",
             fontSize = 16.sp,
@@ -81,6 +93,7 @@ fun SplashScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 8.dp)
         )
         
+        // Institution Name
         Text(
             text = "LaSalle Gràcia",
             fontSize = 14.sp,

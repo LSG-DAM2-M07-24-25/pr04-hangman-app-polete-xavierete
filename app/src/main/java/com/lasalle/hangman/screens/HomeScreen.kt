@@ -1,3 +1,11 @@
+/**
+ * HomeScreen.kt
+ * 
+ * This Composable function represents the Home screen of the Hangman app. It provides users
+ * with options to start a new game, view instructions, or exit the application. The screen
+ * includes the app logo and welcome text for a friendly user experience.
+ */
+
 package com.lasalle.hangman.screens
 
 import androidx.compose.foundation.Image
@@ -24,6 +32,7 @@ import com.lasalle.hangman.Navigation.Screen
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    // State to control the visibility of the help dialog
     val showHelpDialog = remember { mutableStateOf(false) }
 
     Column(
@@ -42,6 +51,7 @@ fun HomeScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // App Logo
         Box(
             modifier = Modifier
                 .padding(bottom = 24.dp)
@@ -57,6 +67,7 @@ fun HomeScreen(navController: NavController) {
             )
         }
 
+        // Welcome Text
         Text(
             text = "Welcome to Hangman!",
             fontSize = 32.sp,
@@ -64,8 +75,9 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
+        // Play Game Button
         Button(
-            onClick = { navController.navigate(Screen.Game.route) },
+            onClick = { navController.navigate(Screen.Difficulty.route) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
@@ -73,32 +85,35 @@ fun HomeScreen(navController: NavController) {
             Text("Play Game", fontSize = 18.sp)
         }
 
+        // Instructions Button
         Button(
-            onClick = { navController.navigate(Screen.Difficulty.route) },
+            onClick = { showHelpDialog.value = true },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         ) {
-            Text("Set Difficulty", fontSize = 18.sp)
+            Text("Instructions", fontSize = 18.sp)
         }
 
+        // Exit Button
         Button(
-            onClick = { showHelpDialog.value = true },
+            onClick = { /* Implement exit functionality if needed */ },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Help", fontSize = 18.sp)
+            Text("Exit", fontSize = 18.sp)
         }
     }
 
+    // Help Instructions Dialog
     if (showHelpDialog.value) {
         AlertDialog(
             onDismissRequest = { showHelpDialog.value = false },
             title = { Text("How to Play", fontWeight = FontWeight.Bold) },
             text = {
                 Column {
-                    Text("1. Select a difficulty level")
-                    Text("2. Try to guess the hidden word")
-                    Text("3. You can make 9 mistakes before losing!")
+                    Text("1. Select a difficulty level.")
+                    Text("2. Try to guess the hidden word one letter at a time.")
+                    Text("3. You have a limited number of attempts based on the difficulty.")
                     Text("4. Good luck!")
                 }
             },
