@@ -9,9 +9,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.lasalle.hangman.Navigation.Screen
 import com.lasalle.hangman.screens.DifficultyScreen
 import com.lasalle.hangman.screens.EndScreen
@@ -38,7 +40,18 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(Screen.Splash.route) { SplashScreen(navController) }
                         composable(Screen.Home.route) { HomeScreen(navController) }
-                        composable(Screen.Game.route) { GameScreen(navController) }
+                        composable(
+                            route = Screen.Game.route,
+                            arguments = listOf(
+                                navArgument("difficulty") { 
+                                    type = NavType.StringType 
+                                    defaultValue = "EASY"
+                                }
+                            )
+                        ) { backStackEntry ->
+                            val difficulty = backStackEntry.arguments?.getString("difficulty")
+                            GameScreen(navController, difficulty)
+                        }
                         composable(Screen.End.route) { EndScreen(navController) }
                         composable(Screen.Difficulty.route) { DifficultyScreen(navController) }
                     }

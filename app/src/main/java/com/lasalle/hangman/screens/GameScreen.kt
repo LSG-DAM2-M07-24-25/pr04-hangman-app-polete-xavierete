@@ -146,7 +146,7 @@ fun GameScreen(
                 val keyboard = listOf(
                     "QWERTYUIOP".toList(),
                     "ASDFGHJKLÑ".toList(),
-                    "ZXCVBNM".toList()
+                    "ZXCVBNMPL".toList()
                 )
 
                 Column(

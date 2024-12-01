@@ -98,7 +98,7 @@ fun HomeScreen(navController: NavController) {
                 Column {
                     Text("1. Select a difficulty level")
                     Text("2. Try to guess the hidden word")
-                    Text("3. You can make 6 mistakes before losing")
+                    Text("3. You can make 9 mistakes before losing!")
                     Text("4. Good luck!")
                 }
             },

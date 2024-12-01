@@ -5,6 +5,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -12,8 +14,6 @@ import com.lasalle.hangman.Navigation.Screen
 
 @Composable
 fun DifficultyScreen(navController: NavController) {
-    var selectedDifficulty by remember { mutableStateOf("EASY") }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -23,41 +23,36 @@ fun DifficultyScreen(navController: NavController) {
     ) {
         Text(
             "Select Difficulty",
-            fontSize = 24.sp,
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        Button(
-            onClick = { 
-                navController.navigate(Screen.Game.createRoute(selectedDifficulty))
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text("Easy")
-        }
+        val difficulties = listOf(
+            "EASY" to Color(0xFF4CAF50),    // Verde
+            "MEDIUM" to Color(0xFFFFA726),   // Naranja
+            "HARD" to Color(0xFFE53935)      // Rojo
+        )
 
-        Button(
-            onClick = { 
-                navController.navigate(Screen.Game.createRoute("MEDIUM"))
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text("Medium")
-        }
-
-        Button(
-            onClick = { 
-                navController.navigate(Screen.Game.createRoute("HARD"))
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            Text("Hard")
+        difficulties.forEach { (difficulty, color) ->
+            Button(
+                onClick = { 
+                    navController.navigate(Screen.Game.createRoute(difficulty))
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = color
+                )
+            ) {
+                Text(
+                    text = difficulty,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                )
+            }
         }
     }
 }
