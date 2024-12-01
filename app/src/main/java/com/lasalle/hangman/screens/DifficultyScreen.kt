@@ -37,7 +37,7 @@ fun DifficultyScreen(navController: NavController) {
         difficulties.forEach { (difficulty, color) ->
             Button(
                 onClick = { 
-                    navController.navigate(Screen.Game.createRoute(difficulty))
+                    navController.navigate("game/$difficulty")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
