@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.lasalle.hangman.R
 import com.lasalle.hangman.Navigation.Screen
 import kotlinx.coroutines.delay
