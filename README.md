@@ -2,19 +2,23 @@
 
 <img width="2336" alt="Screenshot 2024-12-01 at 13 42 05" src="https://github.com/user-attachments/assets/5a9e3d2c-1cc5-466d-9bf6-9d102da7115c">
 
+### Craft:
+
+[Documentación de craft](https://nexuss.craft.me/oevpC9CTeORoQH)
+
 ## 👩‍💻 Desenvolupat per:
 **Pol Hernàndez** i **Xavier Moreno**  
 🎓 Projecte per a **LaSalle Gràcia**
 
 ---
 
-## 📜 Descripció del projecte
+## 📜 Descripció del projecte:
 
 🔠 *Hangman App* és una aplicació interactiva que simula el clàssic joc del *penjat*. Ofereix una experiència dinàmica, visuals atractius i navegació intuïtiva. El projecte inclou diverses pantalles connectades per un estil coherent i professional.  
 
 ---
 
-## 🚀 01 - Introducció
+## 🚀 01 - Introducció:
 
 - **📛 Logo a la part superior**: Marca visual del joc.  
 - **🎮 Botó de jugar**: Inicia un nou joc amb dificultat fàcil.  
@@ -23,7 +27,7 @@
 
 ---
 
-## 🕹️ 02 - Pantalla de joc
+## 🕹️ 02 - Pantalla de joc:
 
 - **🔡 Abecedari interactiu**: Botons per cada lletra, deshabilitats quan s'utilitzen.  
 - **📈 Dificultat progressiva**: 5 nivells amb 10 paraules cadascun.  
@@ -35,21 +39,21 @@
 
 ---
 
-## 🏆 03 - Final del joc
+## 🏆 03 - Final del joc:
 
 - **🔁 Tornar a jugar**: Comença una nova partida.  
 - **⭐ Puntuació final**: Resum del rendiment del jugador.  
 
 ---
 
-## 🎨 Pantalla de llançament (Launch Screen)
+## 🎨 Pantalla de llançament (Launch Screen):
 
 - Mostra una **imatge de marca** del joc abans de carregar la interfície.  
 - Inclou el **logo** amb un estil atractiu i coherent amb la resta de l'aplicació.  
 
 ---
 
-## 🗂️ Pantalla del menú
+## 🗂️ Pantalla del menú:
 
 - Opcions disponibles:  
   - **🎮 Selecció de dificultat**.  
@@ -58,7 +62,7 @@
 
 ---
 
-## 🎯 Pantalla de joc
+## 🎯 Pantalla de joc:
 
 - Contingut principal:  
   - 📝 **Paraula a endevinar amb espais**.  
@@ -71,7 +75,7 @@
 
 ---
 
-## 🏅 Pantalla de resultats
+## 🏅 Pantalla de resultats:
 
 - 🏆 **Resultat de la partida** (victòria o derrota).  
 - Opcions:  
@@ -80,7 +84,7 @@
 
 ---
 
-## 📊 Avaluació
+## 📊 Avaluació:
 
 - **🎥 Launch Screen**: 1 punt.  
 - **🗂️ Pantalla del menú**: 2 punts.  
@@ -93,19 +97,12 @@
 
 ---
 
-## 🔧 Tecnologies utilitzades
+## 🔧 Tecnologies utilitzades:
 
 - **🛠️ Framework**: [Especificar el framework utilitzat, si s’escau].  
 - **💻 Llenguatge de programació**: [Especificar el llenguatge principal].  
 - **🔗 Control de versions**: Git i GitHub Classroom.  
 
 ---
-
-## 📅 Data d’entrega
-
-- 📋 Desenvolupament **en parelles**.  
-- 🚀 L’entrega es farà a través del **repositori de GitHub Classroom** proporcionat pel professorat.  
-
----  
 
 ## 🎉 A gaudir del nostre joc! 🎉
