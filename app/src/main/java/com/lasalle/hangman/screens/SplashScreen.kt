@@ -18,6 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.lasalle.hangman.R
 import com.lasalle.hangman.Navigation.Screen
@@ -84,4 +86,10 @@ fun SplashScreen(navController: NavController) {
             fontWeight = FontWeight.Light
         )
     }
+}
+
+@Preview
+@Composable
+fun SplashScreenPreview() {
+    SplashScreen(navController = NavController(LocalContext.current))
 }
