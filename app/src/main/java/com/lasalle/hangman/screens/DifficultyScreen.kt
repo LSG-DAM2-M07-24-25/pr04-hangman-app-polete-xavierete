@@ -7,12 +7,8 @@ import androidx.navigation.NavController
 import com.lasalle.hangman.Navigation.Screen
 
 @Composable
-fun EndScreen(navController: NavController) {
-    Button(onClick = {
-        navController.navigate(Screen.Home.route) {
-            popUpTo(Screen.Home.route) { inclusive = true }
-        }
-    }) {
-        Text("Back to Home")
+fun DifficultyScreen(navController: NavController) {
+    Button(onClick = { navController.navigate(Screen.Home.route) }) {
+        Text("Return Home")
     }
 }

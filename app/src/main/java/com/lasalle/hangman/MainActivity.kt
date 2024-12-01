@@ -1,9 +1,5 @@
 package com.lasalle.hangman
 
-import EndScreen
-import GameScreen
-import HomeScreen
-import SplashScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.lasalle.hangman.Navigation.Screen
+import com.lasalle.hangman.screens.DifficultyScreen
+import com.lasalle.hangman.screens.EndScreen
+import com.lasalle.hangman.screens.GameScreen
+import com.lasalle.hangman.screens.HomeScreen
+import com.lasalle.hangman.screens.SplashScreen
 import com.lasalle.hangman.ui.theme.HangManTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,6 +39,7 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.Home.route) { HomeScreen(navController) }
                         composable(Screen.Game.route) { GameScreen(navController) }
                         composable(Screen.End.route) { EndScreen(navController) }
+                        composable(Screen.Difficulty.route) { DifficultyScreen(navController) }
                     }
                 }
             }
