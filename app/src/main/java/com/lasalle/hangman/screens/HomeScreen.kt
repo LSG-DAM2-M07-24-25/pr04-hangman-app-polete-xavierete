@@ -80,7 +80,10 @@ fun HomeScreen(navController: NavController) {
             onClick = { navController.navigate(Screen.Difficulty.route) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
         ) {
             Text("Play Game", fontSize = 18.sp)
         }
@@ -89,18 +92,12 @@ fun HomeScreen(navController: NavController) {
         Button(
             onClick = { showHelpDialog.value = true },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.secondary
+            )
         ) {
             Text("Instructions", fontSize = 18.sp)
-        }
-
-        // Exit Button
-        Button(
-            onClick = { /* Implement exit functionality if needed */ },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Exit", fontSize = 18.sp)
         }
     }
 

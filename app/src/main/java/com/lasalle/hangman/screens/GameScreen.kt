@@ -58,16 +58,16 @@ fun GameScreen(
 
     // MARK: - Words Categorized by Difficulty
     val wordsByDifficulty = mapOf(
-        "VERY EASY" to listOf("CAT", "DOG", "SUN", "CAR", "TREE"),
-        "EASY" to listOf("HOUSE", "APPLE", "SMILE", "BRAVE", "WORLD"),
-        "MEDIUM" to listOf("ELEPHANT", "JAZZ", "ORANGE", "PYTHON", "KOTLIN"),
-        "HARD" to listOf("RINOCEROS", "HIPPOPOTAMUS", "TRANQUILITY", "MYSTERIOUS", "CHALLENGE"),
-        "VERY HARD" to listOf("ZEITGEIST", "QUINTESSENTIAL", "FLABBERGASTED", "BUNGALOWS", "XYLOPHONE")
+        "VERY EASY" to listOf("CAT", "DOG", "SUN", "CAR", "TREE", "BOX", "HAT", "PEN", "MAP", "KEY"),
+        "EASY" to listOf("HOUSE", "APPLE", "SMILE", "BRAVE", "WORLD", "BEACH", "CLOUD", "DANCE", "PAINT", "MUSIC"),
+        "MEDIUM" to listOf("ELEPHANT", "JAZZ", "ORANGE", "PYTHON", "KOTLIN", "RAINBOW", "WHISPER", "JOURNEY", "PUZZLE", "BREEZE"),
+        "HARD" to listOf("RINOCEROS", "HIPPOPOTAMUS", "TRANQUILITY", "MYSTERIOUS", "CHALLENGE", "BUTTERFLY", "ADVENTURE", "SYMPHONY", "LABYRINTH", "ZEPHYR"),
+        "VERY HARD" to listOf("ZEITGEIST", "QUINTESSENTIAL", "FLABBERGASTED", "BUNGALOWS", "XYLOPHONE", "JUXTAPOSE", "WHIMSICAL", "EPHEMERAL", "CACOPHONY", "SERENDIPITY")
     )
 
     // MARK: - Select a Random Word Based on Difficulty
-    val currentWord = remember { 
-        wordsByDifficulty[difficulty.uppercase()]?.random() ?: "KOTLIN"
+    var currentWord by remember { 
+        mutableStateOf(wordsByDifficulty[difficulty.uppercase()]?.random() ?: "KOTLIN")
     }
 
     // MARK: - List of Hangman Images Corresponding to failCount
@@ -89,64 +89,110 @@ fun GameScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background) // Set background color from theme
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // MARK: - Hangman Image
-        Image(
-            painter = painterResource(
-                id = if (failCount < hangmanImages.size) hangmanImages[failCount] else hangmanImages.last()
-            ),
-            contentDescription = "Hangman Image",
-            modifier = Modifier
-                .size(200.dp)
-                .clip(RoundedCornerShape(16.dp)) // Rounded corners for consistency
-        )
+        // Top Section
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // MARK: - Hangman Image
+            Image(
+                painter = painterResource(
+                    id = if (failCount < hangmanImages.size) hangmanImages[failCount] else hangmanImages.last()
+                ),
+                contentDescription = "Hangman Image",
+                modifier = Modifier
+                    .size(200.dp)
+                    .clip(RoundedCornerShape(16.dp))
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        // MARK: - Current Word Display
-        Text(
-            text = currentWord.map { if (guessedLetters.contains(it)) it else "_" }.joinToString(" "),
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
+            // MARK: - Current Word Display
+            Text(
+                text = currentWord.map { if (guessedLetters.contains(it)) it else "_" }.joinToString(" "),
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // MARK: - Attempts and Hints Display
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+        // Middle Section - Game Info
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(vertical = 16.dp)
         ) {
             // Attempts Left
             Text(
                 text = "Attempts Left: ${10 - failCount}",
-                fontSize = 16.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
                 color = when {
                     failCount >= 7 -> Color.Red
                     failCount >= 4 -> Color(0xFFFF9800)
                     else -> Color(0xFF4CAF50)
-                }
+                },
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Hints Remaining
+            // Hints Left
             Text(
                 text = "Hints Left: $hintsRemaining",
-                fontSize = 16.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
-                color = if (hintsRemaining > 0) Color(0xFF4CAF50) else Color.Gray
+                color = if (hintsRemaining > 0) Color(0xFF4CAF50) else Color.Gray,
+                modifier = Modifier.padding(bottom = 8.dp)
             )
+
+            // Hint Button
+            Button(
+                onClick = {
+                    val possibleLetters = currentWord.filter { !guessedLetters.contains(it) }
+                    val letterToReveal = possibleLetters.randomOrNull()
+                    if (letterToReveal != null && hintsRemaining > 0) {
+                        guessedLetters += letterToReveal
+                        hintsRemaining--
+                        if (currentWord.all { guessedLetters.contains(it) }) {
+                            gameOver = true
+                            coroutineScope.launch {
+                                delay(1500)
+                                navController.navigate(Screen.End.createRoute(true, difficulty.uppercase()))
+                            }
+                        }
+                    }
+                },
+                enabled = hintsRemaining > 0 && !gameOver,
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .padding(vertical = 8.dp)
+            ) {
+                Text("Use Hint", fontSize = 16.sp)
+            }
+
+            // Restart Button
+            Button(
+                onClick = {
+                    failCount = 0
+                    guessedLetters = ""
+                    gameOver = false
+                    currentWord = wordsByDifficulty[difficulty.uppercase()]?.random() ?: "KOTLIN"
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.secondary
+                ),
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .padding(vertical = 8.dp)
+            ) {
+                Text("Restart Game", fontSize = 16.sp)
+            }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // MARK: - Alphabet Keyboard
+        // Bottom Section - Keyboard
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -226,43 +272,6 @@ fun GameScreen(
                             }
                         }
                     }
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // MARK: - Use Hint Button
-                Button(
-                    onClick = {
-                        // Handle using a hint
-                        val possibleLetters = currentWord.filter { !guessedLetters.contains(it) } // Get letters not yet guessed
-                        val letterToReveal = possibleLetters.randomOrNull() // Select a random unguessed letter
-                        if (letterToReveal != null && hintsRemaining > 0) {
-                            guessedLetters += letterToReveal // Reveal the letter
-                            hintsRemaining-- // Decrement hints remaining
-
-                            // Check if the game is won after revealing the letter
-                            if (currentWord.all { guessedLetters.contains(it) }) {
-                                gameOver = true // Set game over flag
-                                coroutineScope.launch {
-                                    delay(1500) // Wait before navigating to EndScreen
-                                    navController.navigate(Screen.End.createRoute(true, difficulty.uppercase())) // Navigate to EndScreen with win result
-                                }
-                            }
-                        }
-                    },
-                    enabled = hintsRemaining > 0 && !gameOver, // Enable button only if hints are available and game is not over
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (hintsRemaining > 0) Color(0xFF8BC34A) else Color.Gray
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                ) {
-                    Text(
-                        text = "Use Hint",
-                        fontSize = 16.sp,
-                        color = Color.White
-                    )
                 }
             }
         }
